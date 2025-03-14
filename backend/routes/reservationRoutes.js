@@ -3,9 +3,13 @@ const router = express.Router();
 const { bookSession, cancelReservation, getUserReservations } = require("../controllers/reservationController");
 const { authMiddleware, authorizeRoles } = require("../middleware/authMiddleware");
 
+// POST /api/reservations - Book a session (for members)
+router.post("/", authMiddleware, authorizeRoles("member"), bookSession);
 
-router.post("/",authMiddleware, authorizeRoles("member"), bookSession);
-router.delete("/:id",authMiddleware,authorizeRoles("trainer"), cancelReservation);
-router.get("/",authMiddleware,authorizeRoles("member") , getUserReservations);
+// DELETE /api/reservations/:id - Cancel a reservation (for trainers)
+router.delete("/:id", authMiddleware, authorizeRoles("trainer"), cancelReservation);
+
+// GET /api/reservations/:userId - Get reservations for a user (for members)
+router.get("/:userId", authMiddleware, authorizeRoles("member"), getUserReservations);
 
 module.exports = router;

@@ -2,33 +2,36 @@ const mongoose = require("mongoose");
 const bcrypt = require("bcryptjs");
 
 const UserSchema = new mongoose.Schema({
-  firstName: { 
-    type: String, 
-    required: [true, "Le prénom est requis"], 
-    trim: true 
+  firstName: {
+    type: String,
+    required: [true, "Le prénom est requis"],
+    trim: true,
   },
-  lastName: { 
-    type: String, 
-    required: [true, "Le nom est requis"], 
-    trim: true 
+  lastName: {
+    type: String,
+    required: [true, "Le nom est requis"],
+    trim: true,
   },
-  email: { 
-    type: String, 
-    unique: true, 
-    required: [true, "L'email est requis"], 
-    match: [/.+\@.+\..+/, "Format d'email invalide"], 
-    trim: true 
+  email: {
+    type: String,
+    unique: true,
+    required: [true, "L'email est requis"],
+    match: [/.+\@.+\..+/, "Format d'email invalide"],
+    trim: true,
   },
-  password: { 
-    type: String, 
-    required: [true, "Le mot de passe est requis"], 
-    minlength: [6, "Le mot de passe doit contenir au moins 6 caractères"]
+  password: {
+    type: String,
+    required: [true, "Le mot de passe est requis"],
+    minlength: [6, "Le mot de passe doit contenir au moins 6 caractères"],
   },
-  role: { 
-    type: String, 
-    enum: ["member", "trainer"], 
-    default: "member" 
-  }
+  role: {
+    type: String,
+    enum: ["member", "trainer"],
+    default: "member",
+  },
+  dateOfBirth: {
+    type: Date, // Add dateOfBirth field
+  },
 });
 
 // Hash password before saving

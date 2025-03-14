@@ -1,12 +1,13 @@
-const express = require("express");
-const dotenv = require("dotenv");
-const cors = require("cors");
-const connectDB = require("./config/db");
+const express = require('express');
+const dotenv = require('dotenv');
+const cors = require('cors');
+const connectDB = require('./config/db');
 
 // Import Routes
-const sessionRoutes = require("./routes/sessionRoutes");
-const reservationRoutes = require("./routes/reservationRoutes");
-const userRoute = require("./routes/authRoutes");
+const authRoutes = require('./routes/authRoutes');
+const sessionRoutes = require('./routes/sessionRoutes');
+const reservationRoutes = require('./routes/reservationRoutes');
+const dashboardRoutes = require('./routes/dashboardRoutes'); // Import dashboardRoutes
 
 dotenv.config();
 connectDB();
@@ -18,13 +19,15 @@ app.use(express.json());
 app.use(cors());
 
 // Routes
-app.use("/api/sessions", sessionRoutes);
-app.use("/api/reservations", reservationRoutes);
-app.use("/api/auth", userRoute);
+app.use('/api/auth', authRoutes);
+app.use('/api/sessions', sessionRoutes);
+app.use('/api/reservations', reservationRoutes);
+app.use('/api/dashboard', dashboardRoutes); // Mount dashboardRoutes
+app.use('/api/auth', authRoutes);
 
-
-app.get("/", (req, res) => {
-  res.send("🚀 API Gym Management Running...");
+// Default Route
+app.get('/', (req, res) => {
+  res.send('🚀 API Gym Management Running...');
 });
 
 // Port & Server Start
